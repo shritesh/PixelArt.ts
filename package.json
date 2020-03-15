@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "build": "tsc",
+    "client": "parcel index.html",
     "start": "tsc -w",
     "server": "node lib/server.js",
     "test": "eslint --ext .ts src"
@@ -17,6 +18,11 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "parcel-bundler": "^1.12.4",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
   }
 }
