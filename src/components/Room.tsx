@@ -1,4 +1,4 @@
-import { h, Fragment, FunctionComponent } from 'preact'
+import { h, FunctionComponent } from 'preact'
 import { useState, useMemo } from 'preact/hooks'
 import Canvas from '../canvas'
 
@@ -23,17 +23,20 @@ const Room: FunctionComponent<RoomProps> = ({ name }) => {
   }, [canvas])
 
   return (
-    <Fragment>
+    <main>
       <h1>{name}</h1>
       <form>
         <input type='color' value={currentColor} onInput={e => setCurrentColor(e.currentTarget.value)} />
       </form>
       <svg width={1000} height={750} style={'--current-color:' + currentColor}>
         {
-          image.map((row, y) => row.map((color, x) => <rect class='pixel' width={10} height={10} x={x * 10} y={y * 10} key={x.toString() + ':' + y.toString()} style={'--pixel-color:' + color} />))
+          image.map((row, y) =>
+            <g key={y}>
+              {row.map((color, x) => <rect class='pixel' width={10} height={10} x={x * 10} y={y * 10} key={x} style={'--pixel-color:' + color} />)}
+            </g>)
         }
       </svg>
-    </Fragment>
+    </main>
   )
 }
 export default Room
