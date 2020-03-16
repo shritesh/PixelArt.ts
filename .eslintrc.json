@@ -1,6 +1,14 @@
 {
-    "extends": "standard-with-typescript",
+    "extends": [
+        "standard-with-typescript",
+        "standard-jsx"
+    ],
     "parserOptions": {
         "project": "./tsconfig.json"
+    },
+    "settings": {
+        "react": {
+            "pragma": "h"
+        }
     }
 }

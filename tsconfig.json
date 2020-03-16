@@ -4,6 +4,8 @@
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
+    "jsx": "react",
+    "jsxFactory": "h",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
