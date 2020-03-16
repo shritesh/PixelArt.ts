@@ -1,7 +1,7 @@
 import { h, render, FunctionComponent } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
-import Canvas from './Canvas'
 import Home from './Home'
+import Room from './Room'
 
 const App: FunctionComponent = () => {
   const [room, setRoom] = useState(window.location.pathname)
@@ -15,7 +15,7 @@ const App: FunctionComponent = () => {
     history.pushState(null, room, '/' + room)
   }
 
-  return (room === '/' ? <Home onRoom={onRoom} /> : <Canvas room={room} />)
+  return (room === '/' ? <Home onRoom={onRoom} /> : <Room name={room} />)
 }
 
 render(<App />, document.body)
