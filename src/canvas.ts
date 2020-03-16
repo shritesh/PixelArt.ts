@@ -1,15 +1,16 @@
-export default class Canvas {
-  static defaultColor = 'white'
-  static width = 100;
-  static height = 75;
+interface canvas {[key: string]: string}
 
-  colors: {[key: string]: string} = {}
+export const width = 100
+export const height = 75
 
-  color = (x: number, y: number): string => (colorIndex(x, y) in this.colors) ? this.colors[colorIndex(x, y)] : Canvas.defaultColor
-}
+export const create = (): canvas => ({})
+export const getColor = (canvas: canvas, x: number, y: number): string => (colorIndex(x, y) in canvas) ? canvas[colorIndex(x, y)] : defaultColor
+export const setColor = (canvas: canvas, x: number, y: number, color: string): canvas => ({ ...canvas, [colorIndex(x, y)]: color })
+
+const defaultColor = 'white'
 
 const colorIndex = (x: number, y: number): string => {
-  if (x < 0 || x >= Canvas.width || y < 0 || y >= Canvas.height) {
+  if (x < 0 || x >= width || y < 0 || y >= height) {
     throw new Error('Out of bounds')
   }
   return x.toString() + ':' + y.toString()
