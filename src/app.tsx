@@ -1,12 +1,20 @@
-import socketio from 'socket.io-client'
-import { h, render } from 'preact'
-import Home from './Home'
+import { h, render, FunctionComponent } from 'preact'
+import { useState, useEffect } from 'preact/hooks'
+import Home from './components/Home'
 
-const room = window.location.pathname
+const App: FunctionComponent = () => {
+  const [room, setRoom] = useState(window.location.pathname)
 
-const socket = socketio('/')
-socket.emit('join', room, (response: string) => {
-  alert(response)
-})
+  useEffect(() => {
+    window.onpopstate = () => setRoom(window.location.pathname)
+  }, [room])
 
-render(<Home />, document.body)
+  const onRoom = (room: string): void => {
+    setRoom(room)
+    history.pushState(null, room, '/' + room)
+  }
+
+  return (room === '/' ? <Home onRoom={onRoom} /> : null)
+}
+
+render(<App />, document.body)
