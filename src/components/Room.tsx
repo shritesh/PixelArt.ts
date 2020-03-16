@@ -50,6 +50,7 @@ const Room: FunctionComponent<RoomProps> = ({ name }) => {
               <rect class='pixel' width={10} height={10} x={x * 10} y={y * 10} key={x} style={'--pixel-color:' + color} onMouseDown={() => onClick(x, y)} />)}
           </g>)}
       </svg>
+      <p><a href='https://github.com/shritesh/PixelArt.ts'>View Source</a></p>
     </main>
   )
 }

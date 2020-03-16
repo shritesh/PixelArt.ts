@@ -20,6 +20,7 @@ const Home: FunctionComponent<HomeProps> = ({ onRoom }) => {
         <input name='room' value={room} onInput={(e) => setRoom(e.currentTarget.value)} />
         <input type='submit' value='Join' />
       </form>
+      <p><a href='https://github.com/shritesh/PixelArt.ts'>View Source</a></p>
     </main>
   )
 }

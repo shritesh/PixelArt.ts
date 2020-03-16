@@ -8,10 +8,10 @@ const App: FunctionComponent = () => {
 
   useEffect(() => {
     window.onpopstate = () => setRoom(window.location.pathname)
-  }, [room])
+  }, [])
 
   const onRoom = (room: string): void => {
-    setRoom(room)
+    setRoom('/' + room)
     history.pushState(null, room, '/' + room)
   }
 
