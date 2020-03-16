@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "build": "tsc",
-    "client": "parcel watch index.html",
-    "start": "tsc -w",
-    "server": "node lib/server.js",
+    "build": "tsc && parcel build index.html",
+    "start": "node lib/server.js",
+    "watch": "tsc -w",
     "test": "eslint --ext .ts,.tsx src"
   },
   "author": "Shritesh Bhattarai <shr@ite.sh>",
