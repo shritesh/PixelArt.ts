@@ -15,7 +15,7 @@ const Home: FunctionComponent<HomeProps> = ({ onRoom }) => {
 
   return (
     <main>
-      <h1>PixelArt.ts</h1>
+      <h1>PixelArt.ts Collaborative PixelArt Editor</h1>
       <form onSubmit={onSubmit}>
         <input name='room' value={room} onInput={(e) => setRoom(e.currentTarget.value)} />
         <input type='submit' value='Join' />

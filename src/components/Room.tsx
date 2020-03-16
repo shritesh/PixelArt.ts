@@ -1,5 +1,6 @@
 import { h, FunctionComponent } from 'preact'
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
+import socketio from 'socket.io-client'
 import * as Canvas from '../canvas'
 
 interface RoomProps {
@@ -8,9 +9,24 @@ interface RoomProps {
 
 const Room: FunctionComponent<RoomProps> = ({ name }) => {
   const [currentColor, setCurrentColor] = useState('black')
-  const [canvas, setCanvas] = useState(Canvas.create())
+  const [canvas, setCanvas] = useState<Canvas.canvas | null>(null)
+  const [socket, setSocket] = useState<SocketIOClient.Socket | null>(null)
 
-  const onClick = (x: number, y: number): void => setCanvas(Canvas.setColor(canvas, x, y, currentColor))
+  useEffect(() => {
+    const s = socketio('/')
+    s.emit('join', name, (c: Canvas.canvas) => setCanvas(c))
+    s.on('update', (x: number, y: number, color: string) => setCanvas(prevCanvas =>
+      (prevCanvas === null) ? null : Canvas.setColor(prevCanvas, x, y, color)))
+
+    setSocket(s)
+    return () => s.disconnect()
+  }, [])
+
+  if (canvas === null || socket === null) {
+    return <h1>Loading</h1>
+  }
+
+  const onClick = (x: number, y: number): void => { socket.emit('click', name, x, y, currentColor) }
 
   const image = []
   for (let y = 0; y < Canvas.height; y += 1) {
@@ -28,12 +44,11 @@ const Room: FunctionComponent<RoomProps> = ({ name }) => {
         <input type='color' value={currentColor} onInput={e => setCurrentColor(e.currentTarget.value)} />
       </form>
       <svg width={1000} height={750} style={'--current-color:' + currentColor}>
-        {
-          image.map((row, y) =>
-            <g key={y}>
-              {row.map((color, x) => <rect class='pixel' width={10} height={10} x={x * 10} y={y * 10} key={x} style={'--pixel-color:' + color} onClick={() => onClick(x, y)} />)}
-            </g>)
-        }
+        {image.map((row, y) =>
+          <g key={y}>
+            {row.map((color, x) =>
+              <rect class='pixel' width={10} height={10} x={x * 10} y={y * 10} key={x} style={'--pixel-color:' + color} onMouseDown={() => onClick(x, y)} />)}
+          </g>)}
       </svg>
     </main>
   )
