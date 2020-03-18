@@ -1,4 +1,4 @@
-export interface canvas {[key: string]: string}
+export interface canvas {readonly [key: string]: string}
 
 export const width = 100
 export const height = 75
